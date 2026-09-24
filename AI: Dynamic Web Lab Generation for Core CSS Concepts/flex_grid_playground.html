@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flexbox and Grid Playground</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .control-panel {
+            width: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .stage {
+            flex-grow: 1;
+            background: white;
+            margin-left: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            min-height: 400px;
+        }
+        .container {
+            background-color: #ecf0f1;
+            border: 2px dashed #bdc3c7;
+            min-height: 350px;
+            padding: 10px;
+        }
+        .item {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="control-panel">
+        <h3>Layout Playground</h3>
+        <div class="control-group">
+            <label>Display Property:</label>
+            <select id="displayProp">
+                <option value="block">block</option>
+                <option value="flex" selected>flex</option>
+                <option value="grid">grid</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>Flex Direction:</label>
+            <select id="flexDir">
+                <option value="row">row</option>
+                <option value="column">column</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>Justify Content:</label>
+            <select id="justifyCont">
+                <option value="flex-start">flex-start</option>
+                <option value="center">center</option>
+                <option value="space-between">space-between</option>
+                <option value="space-around">space-around</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>Align Items:</label>
+            <select id="alignItems">
+                <option value="stretch">stretch</option>
+                <option value="flex-start">flex-start</option>
+                <option value="center">center</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>Grid Template Columns:</label>
+            <select id="gridCols">
+                <option value="repeat(3, 1fr)">1fr 1fr 1fr</option>
+                <option value="1fr 2fr">1fr 2fr</option>
+                <option value="repeat(2, 1fr)">1fr 1fr</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="stage">
+        <div class="container" id="layoutContainer">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('layoutContainer');
+        const displayProp = document.getElementById('displayProp');
+        const flexDir = document.getElementById('flexDir');
+        const justifyCont = document.getElementById('justifyCont');
+        const alignItems = document.getElementById('alignItems');
+        const gridCols = document.getElementById('gridCols');
+
+        function updateLayout() {
+            const display = displayProp.value;
+            container.style.display = display;
+
+            if (display === 'flex') {
+                container.style.flexDirection = flexDir.value;
+                container.style.justifyContent = justifyCont.value;
+                container.style.alignItems = alignItems.value;
+                container.style.gridTemplateColumns = 'none';
+            } else if (display === 'grid') {
+                container.style.gridTemplateColumns = gridCols.value;
+                container.style.flexDirection = 'initial';
+                container.style.justifyContent = 'initial';
+                container.style.alignItems = 'initial';
+            } else {
+                container.style.flexDirection = 'initial';
+                container.style.justifyContent = 'initial';
+                container.style.alignItems = 'initial';
+                container.style.gridTemplateColumns = 'initial';
+            }
+        }
+
+        document.querySelectorAll('select').forEach(sel => {
+            sel.addEventListener('change', updateLayout);
+        });
+
+        updateLayout();
+    </script>
+</body>
+</html>
